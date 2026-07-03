@@ -2,26 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import pino from 'pino-http';
+import { logger } from './middleware/logger.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { connectMongoDB } from './db/connectMongoDB.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
-app.use(
-  pino({
-    level: 'info',
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        translateTime: 'HH:MM:ss',
-        ignore: 'pid,hostname',
-        messageFormat:
-          '{req.method} {req.url} {res.statusCode} - {responseTime}ms',
-        hideObject: true,
-      },
-    },
-  }),
-);
+app.use(logger);
 
 app.use(express.json());
 app.use(cors());
@@ -39,21 +28,10 @@ app.get('/notes/:noteId', (req, res) => {
   });
 });
 
-app.get('/test-error', () => {
-  throw new Error('Simulated server error');
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
-app.use((req, res) => {
-  res.status(404).json({
-    message: 'Route not found',
-  });
-});
-
-app.use((error, req, res, next) => {
-  res.status(500).json({
-    message: `${error.message}`,
-  });
-});
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Backend run on Port : ${PORT}`);
