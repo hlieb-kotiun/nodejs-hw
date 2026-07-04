@@ -24,4 +24,4 @@ export const notesSchema = new Schema(
   { timestamps: true },
 );
 
-export const Notes = model('Notes', notesSchema, 'notes');
+export const Note = model('Notes', notesSchema);
