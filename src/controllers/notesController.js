@@ -9,37 +9,11 @@ import { Notes } from '../models/note.js';
 
 // GET /notes
 export const getAllNotes = async (req, res) => {
-  const { page = 1, perPage = 5, tag, search } = req.query;
-
-  const skip = (page - 1) * perPage;
-
-  const notesQuery = Notes.find();
-
-  // console.log('notesQuery : ', notesQuery);
-
-  if (tag) {
-    notesQuery.where('tag').equals(tag);
-  }
-
-  if (search) {
-    notesQuery.where({
-      $or: [
-        { title: { $regex: search, $options: 'i' } },
-        { content: { $regex: search, $options: 'i' } },
-      ],
-    });
-  }
-
-  const [totalNotes, notes] = await Promise.all([
-    notesQuery.clone().countDocuments(),
-    notesQuery.skip(skip).limit(perPage),
-  ]);
-
-  const totalPages = Math.ceil(totalNotes / perPage);
-
-  res.status(200).json({ page, perPage, totalNotes, totalPages, notes });
+  const notes = await Notes.find();
+  res.status(200).json(notes);
 };
 
+// GET /notes/:noteId
 export const getNoteById = async (req, res) => {
   const { noteId } = req.params;
 
@@ -63,7 +37,7 @@ export const updateNote = async (req, res) => {
   });
 
   if (!note) {
-    throw createHttpError(404, 'Note not found!');
+    throw createHttpError(404).json(note);
   }
 
   res.status(200).json(note);
