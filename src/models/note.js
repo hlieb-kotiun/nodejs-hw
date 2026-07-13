@@ -1,29 +1,20 @@
 import { model, Schema } from 'mongoose';
+import { TAGS } from '../constants/tags.js';
 
-export const notesSchema = new Schema(
+const noteSchema = new Schema(
   {
     title: { type: String, required: true, trim: true },
     content: { type: String, default: '', trim: true },
     tag: {
       type: String,
       default: 'Todo',
-      enum: [
-        'Work',
-        'Personal',
-        'Meeting',
-        'Shopping',
-        'Ideas',
-        'Travel',
-        'Finance',
-        'Health',
-        'Important',
-        'Todo',
-      ],
+      enum: [...TAGS],
     },
   },
   { timestamps: true },
 );
 
-notesSchema.index({ tag: 1 });
+noteSchema.index({ tag: 1 });
 
-export const Notes = model('Notes', notesSchema, 'notes');
+// export const Note = model('Notes', noteSchema);
+export const Note = model('Notes', noteSchema);
