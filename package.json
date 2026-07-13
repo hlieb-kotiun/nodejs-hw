@@ -21,9 +21,13 @@
   },
   "homepage": "https://github.com/hlieb-kotiun/nodejs-hw#readme",
   "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "celebrate": "^15.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
+    "eslint": "^10.7.0",
     "express": "^5.2.1",
+    "globals": "^17.7.0",
     "http-errors": "^2.0.1",
     "mongoose": "^9.7.3",
     "pino-http": "^11.0.0",
