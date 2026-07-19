@@ -13,10 +13,10 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.use('/auth/register', celebrate(registerUserSchema), registerUser);
+router.post('/auth/register', celebrate(registerUserSchema), registerUser);
 
-router.use('/auth/login', celebrate(loginUserSchema), loginUser);
-router.use('/auth/refresh', refreshUserSession);
-router.use('/auth/logout', logoutUser);
+router.post('/auth/login', celebrate(loginUserSchema), loginUser);
+router.post('/auth/refresh', refreshUserSession);
+router.post('/auth/logout', logoutUser);
 
 export default router;

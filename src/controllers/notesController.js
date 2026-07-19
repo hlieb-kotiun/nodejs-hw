@@ -27,10 +27,6 @@ export const getAllNotes = async (req, res) => {
     notesQuery.skip(skip).limit(perPage),
   ]);
 
-  if (!notes) {
-    throw createHttpError(404, 'Note not found');
-  }
-
   const totalPages = Math.ceil(totalNotes / perPage);
 
   res.status(200).json({ page, perPage, totalNotes, totalPages, notes });
@@ -64,7 +60,7 @@ export const updateNote = async (req, res) => {
   );
 
   if (!note) {
-    throw createHttpError(404).json(note);
+    throw createHttpError(404, 'Note not found!');
   }
 
   res.status(200).json(note);
