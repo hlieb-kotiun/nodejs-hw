@@ -2,12 +2,6 @@ import createHttpError from 'http-errors';
 import { Note } from '../models/note.js';
 
 // GET /notes
-// GET /notes/:noteId
-// POST /notes
-// PATCH /notes/:noteId
-// DELETE /notes/:noteId
-
-// GET /notes
 export const getAllNotes = async (req, res) => {
   const { page = 1, perPage = 5, tag, search } = req.query;
 
