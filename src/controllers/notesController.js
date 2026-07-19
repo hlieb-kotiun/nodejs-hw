@@ -34,6 +34,7 @@ export const getAllNotes = async (req, res) => {
   res.status(200).json({ page, perPage, totalNotes, totalPages, notes });
 };
 
+// GET /notes/:noteId
 export const getNoteById = async (req, res) => {
   const { noteId } = req.params;
 
@@ -57,7 +58,7 @@ export const updateNote = async (req, res) => {
   });
 
   if (!note) {
-    throw createHttpError(404, 'Note not found!');
+    throw createHttpError(404).json(note);
   }
 
   res.status(200).json(note);
