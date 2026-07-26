@@ -102,7 +102,7 @@ export const requestResetEmail = async (req, res) => {
   if (!user) {
     return res
       .status(200)
-      .json({ message: 'Password reset email sent successfully' });
+      .json({ message: 'If this email exists, a reset link has been sent' });
   }
 
   const token = jwt.sign({ sub: user._id, email }, process.env.JWT_SECRET, {
@@ -155,7 +155,7 @@ export const resetPassword = async (req, res) => {
   });
 
   if (!user) {
-    throw createHttpError(401, 'User not found');
+    throw createHttpError(404, 'User not found');
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
