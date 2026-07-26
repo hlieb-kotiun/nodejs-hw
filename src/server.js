@@ -7,6 +7,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import notesRouter from './routes/notesRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { errors } from 'celebrate';
 import cookieParser from 'cookie-parser';
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use(notesRouter);
 app.use(authRoutes);
+app.use(userRoutes);
 
 app.use(notFoundHandler);
 
