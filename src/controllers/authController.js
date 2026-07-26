@@ -139,16 +139,8 @@ export const requestResetEmail = async (req, res) => {
     .json({ message: 'If this email exists, a reset link has been sent' });
 };
 
-// {
-//   sub: '6a6612f83a2501d06860d2c6',
-//   email: 'wosomi8579@apdtax.com',
-//   iat: 1785075920,
-//   exp: 1785076820
-// }
 export const resetPassword = async (req, res) => {
   const { token, password } = req.body;
-
-  console.log(await jwt.verify(token, process.env.JWT_SECRET));
 
   let payload;
   try {
